@@ -1,5 +1,27 @@
-humanScore = 0;
-computerScore = 0;
+function getComputerChoice() {
+  let random = Math.random();
+
+  if (random < 0.33) {
+    return "rock";
+  } else if (random < 0.66) {
+    return "paper";
+  } else {
+    return "scissors";
+  }
+}
+
+function getHumanChoice() {
+  let choice = prompt(
+    "Please enter your choice (rock, paper, scissors):"
+  ).toLowerCase();
+
+  if (choice === "rock" || choice === "paper" || choice === "scissors") {
+    return choice;
+  } else {
+    console.log("Invalid choice, please enter a valid choice");
+    return getHumanChoice();
+  }
+}
 
 function playRound(humanChoice, computerChoice) {
   humanChoice = humanChoice.toLowerCase();
@@ -26,36 +48,28 @@ function playRound(humanChoice, computerChoice) {
   );
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+function playGame() {
+  humanScore = 0;
+  computerScore = 0;
 
-playRound(humanSelection, computerSelection);
+  for (let i = 0; i < 5; i++) {
+    const humanChoice = prompt(
+      "Round" +
+        (i + 1) +
+        ": Please enter your choice (rock, paper or scissors):"
+    );
+    const computerChoice = getComputerChoice();
+    playRound(humanChoice, computerChoice);
+  }
 
-function getComputerChoice() {
-  let random = Math.random();
-
-  if (random < 0.33) {
-    return "rock";
-  } else if (random < 0.66) {
-    return "paper";
+  console.log(`Final score - Human: ${humanScore}, Computer: ${computerScore}`);
+  if (humanScore > computerScore) {
+    console.log("Congratulations! You won the game.");
+  } else if (humanScore < computerScore) {
+    console.log("Sorry, you lost the game.");
   } else {
-    return "scissors";
+    console.log("It's a tie overall!");
   }
 }
 
-console.log(getComputerChoice());
-
-function getHumanChoice() {
-  let choice = prompt(
-    "Please enter your choice (rock, paper, scissors):"
-  ).toLowerCase();
-
-  if (choice === "rock" || choice === "paper" || choice === "scissors") {
-    return choice;
-  } else {
-    console.log("Invalid choice, please enter a valid choice");
-    return getHumanChoice();
-  }
-}
-
-console.log(getHumanChoice());
+playGame();
